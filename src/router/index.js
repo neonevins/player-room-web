@@ -10,15 +10,16 @@ const routes = [
     exact: true,
   },
   {
+    path: "/create",
+    name: "create",
+    component:  () => import('../views/create/index.vue'),
+  },
+  {
     path: "/login",
     name: "login",
     component:  () => import('../views/login/index.vue'),
   },
-  {
-    path: "/test",
-    name: "test",
-    component:  () => import('../views/test/index.vue'),
-  },
+
 ];
 
 // 导出路由
@@ -28,11 +29,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  console.log(to.name)
   if (!to.name) next('login')
   if (to.name !== 'login' ) {
     if (checkLogin().userName) {
       next()
     } else {
+      alert('else')
       next('login')
     }
   }

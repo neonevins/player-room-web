@@ -1,14 +1,14 @@
 <script setup>
-import { ref }  from 'vue'
+import { ref } from 'vue'
 import MyHeader from '../../components/header.vue'
-import MyMain   from '../../components/MyMain.vue'
+import MyCreate from './MyCreate.vue'
 
 const count = ref(0)
 </script>
 
 <template>
   <MyHeader />
-  <MyMain />
+  <MyCreate />
 </template>
 
 <style lang="less" scoped>

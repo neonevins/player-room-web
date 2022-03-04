@@ -2,14 +2,19 @@
 import { ref, reactive }  from 'vue'
 import http               from "../../http/http"
 import { reactiveScreen } from "../../utils/reative"
-// window.onload = window.onresize = function () {
-//   if (reactiveScreen()) {
-//     console.log('resize')
-//     screenSize.value = 'top'
-//   } else {
-//     screenSize.value = 'left'
-//   }
-// }
+
+const screenSize = ref('left');
+const resize = function() {
+  console.log('here')
+  if (reactiveScreen()) {
+    console.log('resize')
+    screenSize.value = 'top'
+  } else {
+    screenSize.value = 'left'
+  }
+}
+window.onresize = resize
+resize();
 const ruleFormRef = ref();
 const formData = reactive({
   name: '',
@@ -50,7 +55,7 @@ const resetForm = (formEl) => {
     </template>
     <el-form
       class="form"
-      label-position="right"
+      :label-position="screenSize"
       label-width="100px"
       :rules="rules"
       :model="formData"
