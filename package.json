@@ -10,7 +10,10 @@
   "dependencies": {
     "@element-plus/icons-vue": "^1.0.1",
     "axios": "^0.26.0",
+    "dplayer": "^1.26.0",
     "element-plus": "^2.0.4",
+    "flv.js": "^1.6.2",
+    "hls.js": "^1.1.5",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "nprogress": "^0.2.0",

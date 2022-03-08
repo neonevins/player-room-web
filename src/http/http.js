@@ -1,25 +1,30 @@
-import axios from 'axios'
-import nprogress from 'nprogress'
-// import { Message } from 'element-ui'
+import axios         from 'axios'
+import nprogress     from 'nprogress'
+import { ElMessage } from 'element-plus'
+import { getToken }  from "../utils"
 
 // 运行环境: 本地环境:devlpment 和线上(生产)环境: production
-const isPro = process.env.NODE_ENV === 'production'
+// const isPro = process.env.NODE_ENV === 'production'
+const isPro = true
 
 const http = axios.create({
-  baseURL: isPro ? '线上的接口路径' : '/api',
-  timeout: 100000
+  baseURL: isPro ? 'http://node.atoz.ac.cn:3001/v1/' : '/api',
+  timeout: 100000,
+  transformRequest: [function (data) {
+    data = JSON.stringify(data)
+    return data
+  }],
 })
 
 http.interceptors.request.use((config) => {
   nprogress.start()
   // 前后端鉴权
-  // jwt: JSON WEB TOKEN
-  // 登录成功之后 后端会返回一个令牌
-  let token = localStorage.getItem('admin_systemToken')
-  if (token) {
-    // 需要在请求头当中添加token
-    config.headers['Authorization'] = token
+  config.headers['token'] = localStorage.getItem('token')
+
+  if(config.method === 'post') {
+    config.headers['Content-Type'] = 'application/json';
   }
+
   return config
 }, err => {
   nprogress.done()
@@ -29,28 +34,16 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use((res) => {
   nprogress.done()
   return res.data
-}, err => {
-  if (err.response && err.response.status) {
-    // 错误请求的状态码
-    let status = err.response.status
-    // if (status === 400) {
-    //   Message.error('参数错误')
-    // }
-    // if (status === 401) {
-    //   Message.error('登录过期,请重新登录')
-    // }
-    // if (status === 403) {
-    //   Message.error('没有权限')
-    // }
-    // if (status === 404) {
-    //   Message.error('接口路径错误')
-    // }
-    // if (status === 500) {
-    //   Message.error('服务器出错')
-    // }
-    // if (status === 503) {
-    //   Message.error('服务器在维护')
-    // }
+},async err => {
+  if(!err.response) {
+    ElMessage.error(JSON.stringify(err.message))
+    return Promise.reject(err)
+  }
+  if(err?.response?.data?.errorCode !== 0) {
+    ElMessage.error(err?.response?.data?.msg)
+    await getToken(true);
+  } else {
+    ElMessage.error(JSON.stringify(err))
   }
   return Promise.reject(err)
 })

@@ -1,11 +1,10 @@
 <script setup>
 import { ref, reactive }  from 'vue'
 import http               from "../../http/http"
-import { reactiveScreen } from "../../utils/reative"
+import { reactiveScreen } from "../../utils/index"
 
 const screenSize = ref('left');
 const resize = function() {
-  console.log('here')
   if (reactiveScreen()) {
     console.log('resize')
     screenSize.value = 'top'

@@ -1,21 +1,36 @@
-<script setup>
+<script>
 import RoomCard from '../views/home/RoomCard.vue'
-import { ref }  from 'vue'
+import { ref, reactive, onMounted, toRefs }  from 'vue'
+import {getRoomList} from '../http/api'
+export default {
+  name: 'MyMain',
+  components: {
+    RoomCard,
+  },
+  setup() {
+    let state = reactive({
+      roomData: [],
+      activeName: ref('news')
+    })
 
-const activeName = ref('news')
+    const handleClick = (tab, event) => {
+      console.log(tab, event)
+    }
 
-const handleClick = (tab, event) => {
-  console.log(tab, event)
-}
-
-const roomData = ref([
-  {
-    title: 'asd',
-    desc: 'asdasdasd',
-    time: '2020-22-22',
-    visitor: 122,
+    onMounted( async () => {
+      const res = await getRoomList({
+        start: 0,
+        count: 20,
+      })
+      console.log(res)
+      state.roomData = res.data.list || [];
+    })
+    return {
+      ...toRefs(state),
+      handleClick,
+    }
   }
-])
+}
 
 </script>
 

@@ -1,4 +1,4 @@
-import { createRouter,createWebHistory} from "vue-router";
+import { createRouter,createWebHashHistory} from "vue-router";
 import { checkLogin } from './utils.js'
 
 // 路由信息
@@ -8,6 +8,11 @@ const routes = [
     name: "home",
     component:  () => import('../views/home/index.vue'),
     exact: true,
+  },
+  {
+    path: "/playRoom",
+    name: "playRoom",
+    component:  () => import('../views/playRoom/index.vue'),
   },
   {
     path: "/create",
@@ -24,7 +29,7 @@ const routes = [
 
 // 导出路由
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 });
 
@@ -35,9 +40,9 @@ router.beforeEach((to, from, next) => {
     if (checkLogin().userName) {
       next()
     } else {
-      alert('else')
       next('login')
     }
+    return;
   }
   next()
 })

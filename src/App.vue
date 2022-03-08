@@ -9,4 +9,7 @@
 
 <style lang="less">
 @import "style/reset.less";
+body {
+  width: 100%;
+}
 </style>

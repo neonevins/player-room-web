@@ -28,6 +28,10 @@ const navTo = function (name) {
   </div>
 </template>
 <style lang="less" scoped>
+@media screen and (max-width: 640px) {
+
+}
+
 #header {
   height: 80px;
   background-color: #fff;
