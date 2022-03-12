@@ -72,6 +72,10 @@ export default {
       this.show = true
     },
     switch_play(liIndex, itemIndex) {
+      if (!this.roomInfo.isMaster) {
+        this.$message('请联系房主切换播放哟~')
+        return;
+      }
       switchPlay({liIndex, itemIndex})
         .then(console.log)
     }

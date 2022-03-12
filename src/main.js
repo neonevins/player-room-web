@@ -22,3 +22,7 @@ app
   .use(router)
   .use(ElementPlus)
   .mount('#app')
+
+
+window.muted = true
+document.body.onclick = () => window.muted = false

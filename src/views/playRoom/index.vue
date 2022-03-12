@@ -30,6 +30,7 @@ export default {
   mounted() {
     this.id = this.$route.query.id;
     this.getRoomDetail();
+    this.tongbu();
   },
   methods: {
     showDialog() {
@@ -41,9 +42,10 @@ export default {
         console.log(detail)
         if (detail.playLink) {
           // this.$refs.video.oncanplay = function() {
-          //   this.play()
+          //   this.$refs.video.play()
           // }
-          this.src = detail.playLink
+          this.playerUrlDemo = detail.playLink
+          // this.$refs.video.play()
           if (detail.startDate) {
             this.currentTime = (detail.currentDate - detail.startDate) / 1000
           }
@@ -74,24 +76,23 @@ export default {
     },
     zergUserJoinWss (wss) {
       const ws = new window.WebSocket(wss)
-      console.log(ws)
-      ws.onopen = function() {
+      ws.onopen = () => {
         console.log('链接成功:' + wss)
-        ws.onmessage = function(res) {
-          console.log(res)
+        ws.onmessage = (res) => {
           const result = JSON.parse(res.data)
           const data = result.data
           if (result.code === 101) { // 状态码101表示加入wss服务器通知
             join_wss(data).then(console.log)
           }
+          // console.log(result.data.playLink)
 
           if (result.code === 201) {
             // this.video.oncanplay = function() {
             //   this.play()
             // }
-            this.playerUrlDemo = result.data.playLink
+            this.playerUrlDemo = data.playLink
           }
-            console.log('接受', result)
+          console.log('接受', result)
         }
       }
     }

@@ -38,7 +38,7 @@ export function getRoomStatus(data) {
 
 // 切换播放视频
 export function switchPlay(data) {
-  return http.post('/room/join_wss', {...data});
+  return http.post('/room/switch_play', {...data});
 }
 
 export default {}

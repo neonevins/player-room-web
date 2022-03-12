@@ -1,7 +1,10 @@
 <template>
-  <div id="player-container">
-    <div ref="player" id="player"></div>
+  <div>
+    <div id="player-container">
+      <div ref="player" id="player"></div>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -36,12 +39,16 @@ export default {
           url: this.src,
         },
         autoplay: true,
+        volume: 0,
       })
       this.video = this.dp.video
-      this.dp.on('canplay', this.dp.play())
+      this.dp.on('canplay', () => {
+        this.dp.video.muted = window.muted;
+        this.dp.video.play()
+      })
       let promise = new Promise((resolve, reject) => {
         if (this.video.duration) { resolve(this.video.duration) }
-        this.dp.on('canplay', (d) => {
+        this.dp.on('canplay', () => {
           resolve(this.video.duration)
         })
         this.dp.on('error', (d) => {
@@ -58,7 +65,7 @@ export default {
     },
   },
   watch: {
-    playUrl(v) {
+    src(v) {
       this.addToPlay()
     },
     currentTime(v) {
