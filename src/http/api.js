@@ -41,4 +41,9 @@ export function switchPlay(data) {
   return http.post('/room/switch_play', {...data});
 }
 
+// 发送弹幕
+export function sendDM(data) {
+  return http.post('/room/say', {...data});
+}
+
 export default {}

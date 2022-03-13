@@ -53,6 +53,7 @@ export default {
   watch: {
     show(v) {
       if (v) {
+        if (this.roomInfo.title) return;
         console.log('goshow')
         getRoomDetail({room_id: this.id})
           .then(res => {

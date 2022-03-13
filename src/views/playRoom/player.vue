@@ -32,6 +32,14 @@ export default {
     this.addToPlay();
   },
   methods: {
+    sendDM(msg) {
+      console.log(this.dp)
+      this.dp.danmaku.draw({
+        text: msg,
+        color: '#fff',
+        type: 'top',
+      });
+    },
     addToPlay() {
       this.dp = new DPlayer({
         element: this.$refs.player,
@@ -70,6 +78,7 @@ export default {
       this.addToPlay()
     },
     currentTime(v) {
+      console.log(v)
       this.dp.seek(v);
     },
   }
