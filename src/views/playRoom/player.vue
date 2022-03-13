@@ -42,6 +42,7 @@ export default {
         volume: 0,
       })
       this.video = this.dp.video
+      this.dp.seek(this.currentTime);
       this.dp.on('canplay', () => {
         this.dp.video.muted = window.muted;
         this.dp.video.play()

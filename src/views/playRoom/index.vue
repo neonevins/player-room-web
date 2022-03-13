@@ -92,6 +92,13 @@ export default {
             // }
             this.playerUrlDemo = data.playLink
           }
+          if (result.code === 202) {
+            // this.video.oncanplay = function() {
+            //   this.play()
+            // }
+            // this.currentTime =
+            // this.playerUrlDemo = data.playLink
+          }
           console.log('接受', result)
         }
       }

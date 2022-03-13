@@ -11,13 +11,15 @@ const init = async () => {
   let token = await getToken()
   console.log(token)
 }
-
-try {
-  await init()
-}catch (e) {
-  console.log(e)
+async function run() {
+  try {
+    await init()
+  }catch (e) {
+    console.log(e)
+  }
 }
 
+run();
 app
   .use(router)
   .use(ElementPlus)
